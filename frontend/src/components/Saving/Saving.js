@@ -3,11 +3,17 @@ import { HiUserAdd } from "react-icons/hi";
 import { FcCheckmark } from "react-icons/fc";
 import { MdDangerous } from "react-icons/md";
 import moment from "moment";
+import { FiEdit } from "react-icons/fi";
 
 const Saving = () => {
   const [showModal, setShowModal] = useState(false);
   const currDate = moment().format("YYYY-MM-D");
-
+  const [search, setSearch] = useState({
+    searchName: "",
+    searchStatus: "",
+    fromDate: "",
+    toDate: "",
+  });
   const [data, setData] = useState({
     name: "",
     date: "",
@@ -20,10 +26,20 @@ const Saving = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const handleSearch = (e) => {
+    setSearch({
+      ...search,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSave = (e) => {
     e.preventDefault();
     console.log(data);
+  };
+  const topSearch = (e) => {
+    e.preventDefault();
+    console.log(search);
   };
 
   return (
@@ -40,7 +56,10 @@ const Saving = () => {
           </button>
         </div>
         {/* search field */}
-        <div className="md:flex items-center bg-indigo-300 mb-4 py-5 md:py-0 shadow">
+        <form
+          onSubmit={topSearch}
+          className="md:flex items-center bg-gray-300 mb-4 py-5 md:py-0 shadow"
+        >
           <div className="md:w-1/6 px-3 my-3">
             <label className="block uppercase tracking-wide text-purple-900 text-xs font-bold mb-2">
               Name
@@ -48,9 +67,8 @@ const Saving = () => {
             <div className="relative">
               <select
                 className="block appearance-none w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                required
-                name="searchname"
-                onChange={handleChange}
+                name="searchName"
+                onChange={handleSearch}
               >
                 <option value="">Select Name</option>
                 <option value="1">New Mexico</option>
@@ -75,13 +93,12 @@ const Saving = () => {
             <div className="relative">
               <select
                 className="block appearance-none w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                required
-                name="status"
-                onChange={handleChange}
+                name="searchStatus"
+                onChange={handleSearch}
               >
                 <option value="">Select One</option>
-                <option value="1">Paid</option>
-                <option value="1">Unpaid</option>
+                <option value="Paid">Paid</option>
+                <option value="Unpaid">Unpaid</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg
@@ -96,14 +113,25 @@ const Saving = () => {
           </div>
           <div className="md:w-1/6 px-3 my-3">
             <label className="block uppercase tracking-wide text-purple-900  text-xs font-bold mb-2">
-              Date
+              From
             </label>
             <input
               className="appearance-none block w-full bg-gray-50 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-              required
               type="date"
-              name="searchDate"
-              onChange={handleChange}
+              name="fromDate"
+              onChange={handleSearch}
+              max={currDate}
+            />
+          </div>
+          <div className="md:w-1/6 px-3 my-3">
+            <label className="block uppercase tracking-wide text-purple-900  text-xs font-bold mb-2">
+              To
+            </label>
+            <input
+              className="appearance-none block w-full bg-gray-50 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+              type="date"
+              name="toDate"
+              onChange={handleSearch}
               max={currDate}
             />
           </div>
@@ -115,16 +143,29 @@ const Saving = () => {
               Save
             </button>
           </div>
-        </div>
+        </form>
+        {/* Table data */}
         <div className="overflow-x-auto relative">
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-collapse border border-slate-400">
+          <table className="w-full shadow text-sm text-left text-gray-500 dark:text-gray-400 border-collapse border border-slate-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr className="text-center">
                 <th scope="col" className="py-3 px-6">
-                  Name
+                  SI
                 </th>
                 <th scope="col" className="py-3 px-6">
-                  Date
+                  Name
+                </th>
+                <th scope="col" className="py-3 px-6 whitespace-nowrap">
+                  Deposit Date
+                </th>
+                <th scope="col" className="py-3 px-6 whitespace-nowrap">
+                  Deposit Time
+                </th>
+                <th scope="col" className="py-3 px-6 whitespace-nowrap">
+                  Update Date
+                </th>
+                <th scope="col" className="py-3 px-6 whitespace-nowrap">
+                  Update Time
                 </th>
                 <th scope="col" className="py-3 px-6">
                   Amount
@@ -132,23 +173,50 @@ const Saving = () => {
                 <th scope="col" className="py-3 px-6">
                   Status
                 </th>
+                <th scope="col" className="py-3 px-6">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center whitespace-nowrap">
+                <td className="py-4 px-6 md:text-xl">1</td>
                 <td className="py-4 px-6 md:text-xl">Bilash Kumar</td>
                 <td className="py-4 px-6 md:text-xl">11-12-2022</td>
+                <td className="py-4 px-6 md:text-xl">12:35 AM</td>
+                <td className="py-4 px-6 md:text-xl">11-12-2022</td>
+                <td className="py-4 px-6 md:text-xl">12:35 AM</td>
                 <td className="py-4 px-6 md:text-xl">200</td>
                 <td className="py-4 px-6 flex item-center justify-center">
                   <FcCheckmark className="text-2xl" />
                 </td>
+                <td className="py-4 px-6">
+                  <button
+                    className="shadow bg-purple-500 hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold p-2 rounded"
+                    type="button"
+                  >
+                    <FiEdit className="text-xl text-white" />
+                  </button>
+                </td>
               </tr>
               <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center whitespace-nowrap">
-                <td className="py-4 px-6 md:text-xl">Bilash Kumar 2</td>
+                <td className="py-4 px-6 md:text-xl">2</td>
+                <td className="py-4 px-6 md:text-xl">Bilash Kumar</td>
                 <td className="py-4 px-6 md:text-xl">11-12-2022</td>
+                <td className="py-4 px-6 md:text-xl">12:35 AM</td>
+                <td className="py-4 px-6 md:text-xl">11-12-2022</td>
+                <td className="py-4 px-6 md:text-xl">12:35 AM</td>
                 <td className="py-4 px-6 md:text-xl">0</td>
                 <td className="py-4 px-6 flex item-center justify-center">
                   <MdDangerous className="text-2xl text-red-600" />
+                </td>
+                <td className="py-4 px-6">
+                  <button
+                    className="shadow bg-purple-500 hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold p-2 rounded"
+                    type="button"
+                  >
+                    <FiEdit className="text-xl text-white" />
+                  </button>
                 </td>
               </tr>
             </tbody>

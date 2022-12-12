@@ -1,7 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
+import Login from "./components/Login/Login";
 import Members from "./components/Members/Members";
+import Report from "./components/Report/Report";
 import Saving from "./components/Saving/Saving";
 
 
@@ -35,6 +37,26 @@ function App() {
             <>
               <Header />
               <Saving/>
+            </>
+          }
+        />
+      <Route
+          exact
+          path="/report"
+          element={
+            <>
+              <Header />
+              <Report/>
+            </>
+          }
+        />
+      <Route
+          exact
+          path="/login"
+          element={
+            <>
+              <Header />
+              <Login/>
             </>
           }
         />

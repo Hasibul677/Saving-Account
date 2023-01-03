@@ -3,7 +3,7 @@ const connectDatabase = require("./config/database");
 
 
 
- connectDatabase();
+connectDatabase();
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is connected on http://localhost:${process.env.PORT}`);

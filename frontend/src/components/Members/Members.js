@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { HiUserAdd } from "react-icons/hi";
-import { FcCheckmark } from "react-icons/fc";
 import { MdDangerous, MdDeleteForever } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import moment from "moment";
+import axios from "axios";
 const address = require("@bangladeshi/bangladesh-address");
 
 const Members = () => {
@@ -28,7 +28,12 @@ const Members = () => {
   };
   const handleSave = (e) => {
     e.preventDefault();
-    console.log(data);
+  
+    axios
+      .post("https://localhost:5000/api/v1/userCreate", data)
+      .then(function (response) {
+        console.log(response);
+      })
   };
 
   return (
